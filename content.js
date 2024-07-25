@@ -30,8 +30,23 @@ function addInstrument(action) {
   instruments[findInstrument()] = findButton(action)
 }
 
+function calculateLots(action) {
+  switch(action) {
+    case BUY:
+      console.log('Value is 1');
+      break;
+    case SELL:
+      console.log('Value is 2');
+      break;
+    default:
+      console.log('Invalid Value');
+      break;
+  }
+
+}
+
 function findInstrument() {
-  let instrumentSelection = document.querySelector();
+  let instrumentSelection = document.querySelector(INSTRUMENT_NAME);
   return instrumentSelection.defaultValue;
 }
 
