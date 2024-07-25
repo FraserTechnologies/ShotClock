@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "ShotClock",
+  "version": "1.0",
+  "description": "A plugin to enable TopStepX users to limit revenge trading by enabling a clock that prevents further trades for a period of time.",
+  "permissions": ["activeTab", "storage"],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "img/icon16.png"
+    }
+  },
+  "icons": {
+    "16": "img/icon16.png"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/Constants.js", "content.js"]
+    }
+  ]
+}
