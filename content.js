@@ -31,7 +31,7 @@ function addInstrument(action) {
 }
 
 function findInstrument() {
-  let instrumentSelection = document.querySelector('input[id="\\:rp\\:"]');
+  let instrumentSelection = document.querySelector();
   return instrumentSelection.defaultValue;
 }
 
@@ -49,7 +49,7 @@ let checkExist = setInterval(function() {
   if (buyButton && sellButton) {
     clearInterval(checkExist);
   }
-}, 100);
+}, CHECK_INTERVAL);
 
 //Todo: Need to build the counter to keep track of active positions in each contract.
 //Todo: Need to build the block to disable the input of orders.
