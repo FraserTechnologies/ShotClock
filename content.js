@@ -15,34 +15,27 @@ function findButton(ButtonText) {
   return actionButton;
 }
 
-function addButtonClickListener(button, action) {
-  if (button) {
-    button.addEventListener("click", function () {
-      console.log(`${action} clicked`);
-      addInstrument(action);
-    });
-  } else {
-    console.log ("Button is undefined or still loading");
-  }
-}
 
+// for keeping track of positions on different instruments.
 function addInstrument(action) {
-  instruments[findInstrument()] = findButton(action)
+  let instrument = findInstrument();
+  instruments[instrument] = calculateLots(action, findButton(action), instrument)
 }
 
-function calculateLots(action) {
+function calculateLots(action, button, instrument) {
+  let value = parseInt(button.childNodes.item(1).textContent) // How many contracts we're changing
+  let instrumentLots = getInstrumentValue(instrument)
   switch(action) {
     case BUY:
-      console.log('Value is 1');
+      instrumentLots += value;
       break;
     case SELL:
-      console.log('Value is 2');
+      instrumentLots -= value;
       break;
     default:
-      console.log('Invalid Value');
-      break;
+      return 0;
   }
-
+  return instrumentLots
 }
 
 function findInstrument() {
@@ -50,16 +43,28 @@ function findInstrument() {
   return instrumentSelection.defaultValue;
 }
 
+// Function for getting and handling instruments that do or do not have a value.
+function getInstrumentValue(instrument) {
+  if (instruments[instrument]) {
+    return instruments[instrument]
+  } else {
+    return 0;
+  }
+}
+
 // Polling every 100ms until the buttons are added to the document
 let checkExist = setInterval(function() {
   let buyButton;
   let sellButton;
+  let closeButton;
   if (document.querySelectorAll(".MuiButtonBase-root")) {
     console.log("The buttons are present.");
     buyButton = findButton(BUY);
     sellButton = findButton(SELL);
-    addButtonClickListener(buyButton, BUY);
-    addButtonClickListener(sellButton, SELL);
+    closeButton = findButton(CLOSE);
+    addOrderButtonClickListener(buyButton, BUY);
+    addOrderButtonClickListener(sellButton, SELL);
+    addCloseButtonClickListener(closeButton, CLOSE);
   }
   if (buyButton && sellButton) {
     clearInterval(checkExist);
@@ -67,6 +72,7 @@ let checkExist = setInterval(function() {
 }, CHECK_INTERVAL);
 
 //Todo: Need to build the counter to keep track of active positions in each contract.
+//Todo: Need to build flatten / close functionality because bugs already are arising. - Priority.
 //Todo: Need to build the block to disable the input of orders.
 //Todo: Need to build a configuration for time frames.
 //Todo: Failsafe emergency flatten.

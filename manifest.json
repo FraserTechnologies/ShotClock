@@ -20,7 +20,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/Constants.js", "content.js"]
+      "js": ["src/listeners.js","src/Constants.js", "content.js"]
     }
   ]
 }
